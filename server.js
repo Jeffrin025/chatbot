@@ -333,7 +333,7 @@ async function handleQuery(prompt) {
   const detectedlanguage = await detectLanguage(prompt);
   console.log(detectedlanguage);
 
-  if (detectedlanguage !== 'en') {
+  if (detectedlanguage != 'en') {
     prompt = await translateToEnglish(prompt);
     prompt = prompt.toLowerCase()
     console.log('Translated prompt:', prompt);
@@ -502,7 +502,7 @@ function extractCollegeName(prompt) {
   }
 
 
-  if (detectedlanguage !== 'en') {
+  if (detectedlanguage != 'en') {
     console.log(detectedlanguage);
     responseText = await translateToDetectedLanguage(responseText, detectedlanguage);
     console.log('Translated response text:', responseText);
