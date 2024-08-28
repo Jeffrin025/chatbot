@@ -1,7 +1,7 @@
 (function () {
   var width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
 
-  // Main
+
   initHeader();
   initAnimation();
   addListeners();
@@ -19,7 +19,7 @@
       canvas.height = height;
       ctx = canvas.getContext("2d");
 
-      // create points
+    
       points = [];
       for (var x = 0; x < width; x = x + width / 20) {
           for (var y = 0; y < height; y = y + height / 20) {
@@ -30,7 +30,7 @@
           }
       }
 
-      // for each point find the 5 closest points
+   
       for (var i = 0; i < points.length; i++) {
           var closest = [];
           var p1 = points[i];
@@ -60,7 +60,7 @@
           p1.closest = closest;
       }
 
-      // assign a circle to each point
+
       for (var i in points) {
           var c = new Circle(
               points[i],
@@ -71,7 +71,7 @@
       }
   }
 
-  // Event handling
+
   function addListeners() {
       if (!("ontouchstart" in window)) {
           window.addEventListener("mousemove", mouseMove);
@@ -112,7 +112,7 @@
       canvas.height = height;
   }
 
-  // animation
+
   function initAnimation() {
       animate();
       for (var i in points) {
@@ -124,7 +124,7 @@
       if (animateHeader) {
           ctx.clearRect(0, 0, width, height);
           for (var i in points) {
-              // detect points in range
+         
               if (Math.abs(getDistance(target, points[i])) < 4000) {
                   points[i].active = 0.3;
                   points[i].circle.active = 0.6;
@@ -150,7 +150,7 @@
       gsap.to(p, { x: p.originX - 50 + Math.random() * 100, y: p.originY - 50 + Math.random() * 100, duration: 1 + 1 * Math.random(), ease: "circ.inOut", onComplete: function () { shiftPoint(p); } });
   }
 
-  // Canvas manipulation
+
   function drawLines(p) {
       if (!p.active) return;
       for (var i in p.closest) {
@@ -165,7 +165,7 @@
   function Circle(pos, rad, color) {
       var _this = this;
 
-      // constructor
+ 
       (function () {
           _this.pos = pos || null;
           _this.radius = rad || null;
@@ -219,7 +219,6 @@ socket.on('error', (message) => {
   appendMessage('bot', message);
 });
 
-// Voice recognition
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'en-IN';
 recognition.interimResults = false;

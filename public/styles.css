@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* Prevent scrolling */
+  overflow: hidden; 
 }
 
 body {
@@ -59,15 +59,15 @@ body {
   }
 }
 
-/* Chat container */
+
 #chat-container {
-  width: 35%; /* Set width to 35% */
+  width: 35%; 
   margin: 4px;
   height: 82vh;
   position: fixed;
   right: 0;
   top: 0;
-  background: rgba(255, 255, 255, 0.2); /* Slightly transparent background */
+  background: rgba(255, 255, 255, 0.2); 
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -78,7 +78,7 @@ body {
   overflow-y: auto;
 }
 
-/* Input container */
+
 #input-container {
   display: flex;
   padding: 7px;
@@ -86,9 +86,9 @@ body {
   margin-bottom: 27px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  position: absolute; /* Position absolutely within the chat container */
-  bottom: 0; /* Align to the bottom */
-  width: 33%; /* Change width to 40% */
+  position: absolute; 
+  bottom: 0; 
+  width: 33%; 
   box-sizing: border-box;
 }
 
