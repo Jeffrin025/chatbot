@@ -37,7 +37,7 @@ body {
   z-index: -1;
   margin: 0;
   padding: 0;
-  color: #f9f1e9;
+  color: black;
   text-align: center;
   top: 50%;
   left: 50%;
@@ -61,11 +61,11 @@ body {
 
 
 #chat-container {
-  width: 35%; 
-  margin: 4px;
-  height: 82vh;
+  width: 45%; 
+  margin-top: 4px;
+  height: 86vh;
   position: fixed;
-  right: 0;
+  justify-content: center;
   top: 0;
   background: rgba(255, 255, 255, 0.2); 
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -82,13 +82,14 @@ body {
 #input-container {
   display: flex;
   padding: 7px;
-  margin-left: 990px;
-  margin-bottom: 27px;
+  display: flex;
+  justify-content: center;
+ 
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   position: absolute; 
   bottom: 0; 
-  width: 33%; 
+  width: 45%; 
   box-sizing: border-box;
 }
 
@@ -138,6 +139,19 @@ body {
 
 .bot-message {
   align-self: flex-start;
-  background-color: #838996;
+  background-color: #4d4855;
   color: #fff;
+}
+#response-text.collapsed {
+  max-height: 100px; /* Adjust based on your preference */
+  overflow: hidden;
+  position: relative;
+}
+
+#response-text.expanded {
+  max-height: none;
+}
+
+#toggle-button {
+  margin-top: 10px;
 }

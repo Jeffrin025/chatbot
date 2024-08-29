@@ -231,13 +231,44 @@ socket.on('error', (message) => {
   appendMessage('bot', message);
 });
 
-// Voice recognition setup
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.lang = 'en-IN';
 recognition.interimResults = false;
 
-voiceButton.addEventListener('click', () => {
-  recognition.start();
+const supportedLanguages = {
+  'en': 'en-IN',    
+  'hi': 'hi-IN',    
+  'ta': 'ta-IN',    
+  'ml': 'ml-IN',    
+  'te': 'te-IN',  
+  'gu': 'gu-IN',   
+};
+
+
+function getLanguageInput() {
+  return new Promise((resolve) => {
+    const userLang = prompt("Please enter your preferred language (e.g., English, Tamil, Malayalam, Telugu, Gujarati):", "English").toLowerCase();
+    
+    const langCode = Object.keys(supportedLanguages).find(key => userLang.includes(key));
+    
+    if (langCode) {
+      resolve(supportedLanguages[langCode]);
+    } else {
+      alert("Unsupported language. Defaulting to English (India).");
+      resolve(supportedLanguages['en']);
+    }
+  });
+}
+
+voiceButton.addEventListener('click', async () => {
+  try {
+    const selectedLang = await getLanguageInput();
+    recognition.lang = selectedLang;
+    console.log(`Language set to ${recognition.lang}`);
+    
+    recognition.start();
+  } catch (error) {
+    console.error('Error setting language for voice recognition:', error);
+  }
 });
 
 recognition.addEventListener('result', (event) => {
