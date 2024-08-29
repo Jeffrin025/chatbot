@@ -186,6 +186,7 @@
       return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
   }
 })();
+
 const socket = io();
 
 const chatContainer = document.getElementById('chat-container');
@@ -201,7 +202,8 @@ function appendMessage(type, text) {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-sendButton.addEventListener('click', () => {
+// Function to send a message
+function sendMessage() {
   const prompt = messageInput.value;
   if (prompt.trim() === '') return;
 
@@ -209,6 +211,16 @@ sendButton.addEventListener('click', () => {
   messageInput.value = '';
 
   socket.emit('message', prompt);
+}
+
+// Send message when the "Send" button is clicked
+sendButton.addEventListener('click', sendMessage);
+
+// Send message when the "Enter" key is pressed
+messageInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
 });
 
 socket.on('message', (data) => {
@@ -219,6 +231,7 @@ socket.on('error', (message) => {
   appendMessage('bot', message);
 });
 
+// Voice recognition setup
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.lang = 'en-IN';
 recognition.interimResults = false;

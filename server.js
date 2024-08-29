@@ -238,6 +238,7 @@ import { Server } from 'socket.io';
 import axios from 'axios';  // Corrected import statement
 import pg from 'pg';
 
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
@@ -305,6 +306,16 @@ async function findIntent(text) {
   }
 }
 
+function checkQuery(query) {
+  
+  const pattern = /\b(?:fee|structure)\b(?!.*\b(?:btech|mtech|me|be|pgdm|mba|phd|b\.tech|m\.tech|ph\.d)\b)/i;
+  if (pattern.test(query)) {
+    return "yes";
+  } else {
+    return "no";
+  }
+}
+
 const collegeRelatedKeywords = [
   'course', 'fee', 'admission', 'placement', 'cut-off', 
   'ranking', 'scholarship', 'faculty', 'phone number', 
@@ -353,6 +364,12 @@ if (containsCollegeKeywords) {
   intent = undefined;
   console.log('No college-related keywords found. Intent set to:', intent);
 }
+
+const res = checkQuery(prompt)
+console.log(res);
+if(res=="yes"){
+  intent = "fee"
+}
   
 function extractCollegeName(prompt) {
   const lowerCasePrompt = prompt.toLowerCase();
@@ -386,7 +403,7 @@ function extractCollegeName(prompt) {
       break;
     }
 
-    case "course and fee strct for mba/pgdm ": {
+    case "course and fee strct for mba/pgdm": {
       const queryText = `SELECT courseandfeestructureformba_pgdm_course FROM collegecoursedetails WHERE college ILIKE $1;`;
       const result = await pool.query(queryText, [collegeName]);
       responseText = result.rows.length > 0
@@ -404,6 +421,30 @@ function extractCollegeName(prompt) {
       break;
     }
 
+    case "fee": {
+      const queryText = `SELECT 
+        courseandfeestructureforbtech_be_course, 
+        courseandfeestructureforme_mtech_course, 
+        courseandfeestructureformba_pgdm_course, 
+        courseandfeestructureforphdcourse 
+      FROM collegecoursedetails WHERE college ILIKE $1;`;
+    
+      const result = await pool.query(queryText, [collegeName]);
+    
+      if (result.rows.length > 0) {
+        const fees = result.rows[0];
+        responseText = `
+        Here are the fee details for ${collegeName}:
+        - **B.Tech/B.E**: ${fees.courseandfeestructureforbtech_be_course ? fees.courseandfeestructureforbtech_be_course : "Not available"}
+        - **M.Tech/M.E**: ${fees.courseandfeestructureforme_mtech_course ? fees.courseandfeestructureforme_mtech_course : "Not available"}
+        - **MBA/PGDM**: ${fees.courseandfeestructureformba_pgdm_course ? fees.courseandfeestructureformba_pgdm_course : "Not available"}
+        - **Ph.D**: ${fees.courseandfeestructureforphdcourse ? fees.courseandfeestructureforphdcourse : "Not available"}
+        `;
+      } else {
+        responseText = `Sorry, I couldn't find any fee details for ${collegeName}.`;
+      }
+      break;
+    }
     case "review": {
       const queryText = `SELECT review FROM collegecoursedetails WHERE college ILIKE $1;`;
       const result = await pool.query(queryText, [collegeName]);
@@ -465,6 +506,48 @@ function extractCollegeName(prompt) {
         : `Sorry, I couldn't find scholarship details for ${collegeName}.`;
       break;
     }
+    case "detail": {
+      console.log("found")
+      const queryText = `SELECT 
+        courseandfeestructureforbtech_be_course, 
+        courseandfeestructureforme_mtech_course, 
+        courseandfeestructureformba_pgdm_course, 
+        courseandfeestructureforphdcourse, 
+        review, 
+        admission, 
+        placement, 
+        cutoff, 
+        ranking, 
+        collegedescription, 
+        scholarship, 
+        faculty, 
+        phone_number 
+      FROM collegecoursedetails WHERE college ILIKE $1;`;
+    
+      const result = await pool.query(queryText, [collegeName]);
+      
+      responseText=  result.rows.length > 0 
+      ?`
+        Here are the details for ${collegeName}:
+        - **B.Tech/B.E Course & Fees**: ${details.courseandfeestructureforbtech_be_course}
+        - **M.Tech/M.E Course & Fees**: ${details.courseandfeestructureforme_mtech_course}
+        - **MBA/PGDM Course & Fees**: ${details.courseandfeestructureformba_pgdm_course}
+        - **Ph.D Course & Fees**: ${details.courseandfeestructureforphdcourse}
+        - **Review**: ${details.review}
+        - **Admission Details**: ${details.admission}
+        - **Placement Details**: ${details.placement}
+        - **Cut-Off**: ${details.cutoff}
+        - **Ranking**: ${details.ranking}
+        - **Description**: ${details.collegedescription}
+        - **Scholarship**: ${details.scholarship}
+        - **Faculty Details**: ${details.faculty}
+        - **Phone Number**: ${details.phone_number}
+        `
+     : `Sorry, I couldn't find detailed information for ${collegeName}.`;
+      
+      break;
+    }
+    
   
     case "faculty": {
       const queryText = `SELECT faculty FROM collegecoursedetails WHERE college ILIKE $1;`;
