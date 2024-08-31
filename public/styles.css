@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-  /* background: url("https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/img/demo-1-bg.jpg") no-repeat center center fixed; */
+
   background-color: #4d4855;
   background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
 
@@ -15,7 +15,45 @@ body {
   align-items: center;
   font-family: "Anton", sans-serif;
 }
+nav{
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  margin: 10px;
+}
+nav img{
+  margin-top: 5px;
+  height:50px;
+  width:50px;
+  
+}
+.dropdown-content {
+  display: none; 
+  position: absolute;
+  top:65px;
+  right: 0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 20px;
+}
 
+.dropdown-content a {
+  color:white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #00ffff9e;
+  border-radius: 20px;
+}
 /* Header */
 .large-header {
   position: absolute;
@@ -36,8 +74,8 @@ body {
   position: absolute;
   z-index: -1;
   margin: 0;
-  padding: 0;
-  color: black;
+  padding-bottom: 100px;
+  color: rgba(255, 255, 255, 0.2);
   text-align: center;
   top: 50%;
   left: 50%;
@@ -61,21 +99,25 @@ body {
 
 
 #chat-container {
-  width: 45%; 
+  width: 45%;
   margin-top: 4px;
   height: 86vh;
   position: fixed;
-  justify-content: center;
   top: 0;
-  background: rgba(255, 255, 255, 0.2); 
+  background: rgba(255, 255, 255, 0.2);
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: column; /* Regular column layout, new messages added to the bottom */
+  align-items: flex-start; /* Align items at the top */
   padding: 10px;
   overflow-y: auto;
+}
+#messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 
@@ -84,7 +126,7 @@ body {
   padding: 7px;
   display: flex;
   justify-content: center;
- 
+  margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   position: absolute; 
@@ -100,7 +142,8 @@ body {
   border-radius: 5px;
   margin-right: 10px;
   background: rgba(255, 255, 255, 0.2);
-  color: rgb(27, 25, 25);
+  color: rgb(255, 255, 255);
+  font-weight: 600;
 }
 
 #message-input::placeholder {
@@ -128,30 +171,141 @@ body {
   padding: 10px;
   border-radius: 10px;
   max-width: 80%;
+  word-wrap: break-word;
 }
 
 .user-message {
   align-self: flex-end;
-  background-color: #4d4855;
-  ;
+  background-color: #00000054;
+
   color: #fff;
 }
 
 .bot-message {
   align-self: flex-start;
-  background-color: #4d4855;
+  background-color: #0000006b;
   color: #fff;
 }
-#response-text.collapsed {
-  max-height: 100px; /* Adjust based on your preference */
-  overflow: hidden;
+.lang-selector {
+  position: fixed;
+  top: 63%;
+  left: 64%;
+  transform: translate(-50%, -50%);
+  padding: 15px; 
+  background-color: #1111117f;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 1000;
+  width: 250px; 
+}
+
+.lang {
+  margin-bottom: 15px; 
+  font-size: 16px; 
+  color: #ffffff;
+}
+
+.radio-container {
+  margin-bottom: 15px; 
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: 14px; 
+  line-height: 18px; 
+}
+
+.radio input {
+  display: none; 
+}
+
+.radio input + span {
+  display: inline-block;
   position: relative;
+  padding-left: 25px; 
 }
 
-#response-text.expanded {
-  max-height: none;
+.radio input + span:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%; 
+  left: 0;
+  transform: translateY(-50%); 
+  border-radius: 50%;
+  width: 14px; 
+  height: 14px; 
+  border: 1px solid #ccc;
+  background: #fff;
 }
 
-#toggle-button {
-  margin-top: 10px;
+.radio input + span:after {
+  content: '';
+  display: block;
+  width: 8px; 
+  height: 8px; 
+  background: #222;
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%) scale(0);
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+}
+
+.radio input:checked + span:after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+.select-button {
+  height: 40px;
+  width: 180px;
+  margin: 20px 20px 5px 20px;
+  background-color: #1b1b1c;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Anton", sans-serif;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  transition: color 0.4s ease-in-out;
+}
+.select-button:hover {
+  color: black; /* Ensure text color changes on hover */
+}
+.select-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgb(0, 247, 238);
+  transition: width 0.4s ease-in-out;
+  z-index: 0; 
+}
+.select-button:hover {
+  color: black; 
+}
+.select-button:hover::before {
+  width: 100%;
+}
+
+
+
+.select-button span {
+  position: relative;
+  z-index: 1; 
+  font-family: 'Poppins', sans-serif;
+
+    font-weight: bold;
 }

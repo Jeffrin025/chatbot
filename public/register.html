@@ -1,0 +1,230 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <style>
+        body {
+            background: rgb(210,121,238);
+            background: radial-gradient(circle, rgba(210,121,238,1) 0%, rgba(248,195,144,1) 100%);
+        }
+        .image {
+            height: 200px;
+            padding-top: 145px;
+            text-align: center; /* Center the image horizontally */
+        }
+        .card {
+            margin-top: 20px; /* Space above the card */
+            border-radius: 8px; /* Rounded corners for the card */
+        }
+        .button {
+            background-color: #E1AFD1;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #d291bc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container grid">
+        <div class="image">
+            <img src="/image/register-bgr-removebg-preview.png" alt="Register Background">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="body">
+                    <h1 class="register">Register</h1>
+                    <form action="/register" method="POST">
+                        <label for="username">UserName</label>
+                        <input type="text" id="username" name="username" class="form-control" style="width: 250px;">
+
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" style="width: 250px;">
+                        <br/>
+                        <button type="submit" class="button">Register</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PITCH IN!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            background-image: url(https://images.unsplash.com/photo-1671159593357-ee577a598f71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+            background-position: center;
+        }
+        h1 {
+            text-align: center;
+            color: aliceblue;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            margin: auto;
+            width: 50%;
+            margin-top: 150px;
+            box-shadow: 2px 5px 20px rgba(249, 249, 249, 0.389);
+            background-color: rgba(0, 0, 0, 0.2);
+            width: 410px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .container:hover {
+            background-color: black;
+        }
+        label {
+            color: aliceblue;
+            display: block;
+            font-size: 18px;
+            margin: 10px 20px 0px 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+        input {
+            height: 35px;
+            width: 300px;
+            margin: 10px 20px 0px 20px;
+            margin-bottom: 0px;
+            font-size: 15px;
+            color: aliceblue;
+            border-radius: 5px;
+            border-width: 3px;
+            border-color: black;
+            background-color: rgba(240, 248, 255, 0.315);
+        }
+        .error-message {
+            color:white;
+            font-size: 12px;
+            margin-top: 5px;
+            margin-left: 20px;
+            width:300px;
+            text-align:center;
+        }
+        button {
+            height: 43px;
+            width: 310px;
+            margin: 30px 20px 5px 20px;
+            background-color: black;
+            border-radius: 10px;
+            background-color: #1b1b1c;
+            color: white;
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            transition: color 0.4s ease-in-out;
+        }
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: white;
+            transition: width 0.4s ease-in-out;
+            z-index: 0;
+        }
+        button:hover::before {
+            width: 100%;
+        }
+        button:hover {
+            color: black;
+        }
+        button span {
+            position: relative;
+            z-index: 1;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+        p {
+            text-align: center;
+            font-size: 18px;
+        }
+        input:hover {
+            background-color: rgba(240, 248, 255, 0.5);
+            box-shadow: 5px 5px 20px rgba(249, 249, 249, 0.389);
+            font-weight: bold;
+            border-width: 3px;
+            border-color: rgba(249, 249, 249);
+        }
+        p {
+            color: aliceblue;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+        }
+        a {
+            color: aliceblue;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <form action="\register" method="POST" onsubmit="return validatePassword()">
+                <h1>SIGN UP!</h1>
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>                   
+                </div>
+                <div id="password-error" class="error-message"></div>
+                <div>
+                    <button><span>Register</span></button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const errorMessageDiv = document.getElementById('password-error');
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+            if(password.length<8){
+                errorMessageDiv.innerHTML = 'Must contain at least 8 characters';
+                return false;
+            }
+            if (!regex.test(password)) {
+                errorMessageDiv.innerHTML = 'Must contain at least one uppercase, one lowercase, one number, and one special character';
+                return false; 
+            }
+            errorMessageDiv.innerHTML = '';
+            return true;
+        }
+    </script>
+</body>
+</html>

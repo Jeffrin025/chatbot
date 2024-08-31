@@ -231,31 +231,61 @@ socket.on('error', (message) => {
   appendMessage('bot', message);
 });
 
+
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 recognition.interimResults = false;
 
 const supportedLanguages = {
-  'en': 'en-IN',    
-  'hi': 'hi-IN',    
-  'ta': 'ta-IN',    
-  'ml': 'ml-IN',    
-  'te': 'te-IN',  
-  'gu': 'gu-IN',   
+  'english': 'en-IN',    
+  'hindhi': 'hi-IN',    
+  'tamil': 'ta-IN',    
+  'malayalam': 'ml-IN',    
+  'telugu': 'te-IN',  
+  'gujarathi': 'gu-IN',   
 };
 
 
 function getLanguageInput() {
   return new Promise((resolve) => {
-    const userLang = prompt("Please enter your preferred language (e.g., English, Tamil, Malayalam, Telugu, Gujarati):", "English").toLowerCase();
-    
-    const langCode = Object.keys(supportedLanguages).find(key => userLang.includes(key));
-    
-    if (langCode) {
-      resolve(supportedLanguages[langCode]);
-    } else {
-      alert("Unsupported language. Defaulting to English (India).");
-      resolve(supportedLanguages['en']);
-    }
+    const dialog = document.createElement('div');
+    dialog.style.position = 'fixed';
+    dialog.style.top = '5%'; 
+    dialog.style.left = '50%';
+    dialog.style.transform = 'translate(-50%, 0)'; 
+    dialog.style.padding = '20px';
+    dialog.style.backgroundColor = '#fff';
+    dialog.style.border = '1px solid #ccc';
+    dialog.style.borderRadius = '8px';
+    dialog.style.zIndex = 1000;
+
+    const title = document.createElement('h3');
+    title.textContent = 'Please select your preferred language:';
+    dialog.appendChild(title);
+
+    Object.entries(supportedLanguages).forEach(([key, value]) => {
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'language';
+      radio.value = key;
+      if (key === 'en') radio.checked = true; 
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(key));
+      dialog.appendChild(label);
+      dialog.appendChild(document.createElement('br'));
+    });
+
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Submit';
+    submitButton.addEventListener('click', () => {
+      const selectedLang = dialog.querySelector('input[name="language"]:checked').value;
+      dialog.remove(); 
+      resolve(supportedLanguages[selectedLang] || supportedLanguages['en']); 
+    });
+    dialog.appendChild(submitButton);
+
+    document.body.appendChild(dialog);
   });
 }
 
